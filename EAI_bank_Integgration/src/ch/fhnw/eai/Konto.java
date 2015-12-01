@@ -1,9 +1,7 @@
 package ch.fhnw.eai;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *TODO IBAN
  */
 
 /**
@@ -15,7 +13,7 @@ public class Konto
     private int kid;
     private String iban;
     private int kontostand;
-    private int kontoart; 
+    private int kontoart; // IDs 1: Kontokorrent, 2:Sparkonto, 3:Depotkonto
 
     public Konto(String iban, int kontostand, int kontoart) {
         this.iban = iban;
@@ -69,6 +67,13 @@ public class Konto
     public void setIban(String iban) {
         this.iban = iban;
     }
+      /**
+     * @param iban the iban to set
+     */
+    public void setIban(String land, int bic, int kNr) {
+        //TODO
+        this.iban = land+bic+""+kNr;
+    }
 
     /**
      * @param kontostand the kontostand to set
@@ -78,7 +83,7 @@ public class Konto
     }
 
     /**
-     * @param kontoart the kontoart to set
+     * @param kontoart the kontoart to set; 1: Kontokorrent, 2:Sparkonto, 3:Depotkonto
      */
     public void setKontoart(int kontoart) {
         this.kontoart = kontoart;

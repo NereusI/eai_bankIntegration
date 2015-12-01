@@ -69,13 +69,14 @@ public class ReadCSV {
                 sb.append(content[3]);
                 sb.append(" ");
                 sb.append(content[4]);
-                sb.append(", ");
-                sb.append(content[5]);
+                //sb.append(" ");
+                //sb.append(content[5]);  // in KontokorentAdresse nicht vorhanden Ländercode macht es überflüsig
                 String adresse = sb.toString();
                 
                 String country = content[5];
                 int laendercode = 0;
                 
+                // Ersetzen durch kunde.setLaendercode(String)
                 String[] s = {"Schweiz","Switzerland","Suisse"};
                 String[] n = {"The Netherlands","Holland","Niederlande"};
                 String[] g = {"Deutschland","Germany"};

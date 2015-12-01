@@ -2,24 +2,19 @@ package ch.fhnw.eai;
 
 import java.util.Objects;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
  * @author Tobias
  */
-public class Kunde 
-{
-   private int kid;
-   private String vorname;
-   private String nachname;
-   private String adresse;
-   private int laendercode;
-   private String status;  
+public class Kunde {
+
+    private int kid;
+    private String vorname;
+    private String nachname;
+    private String adresse;
+    private int laendercode;
+    private String status;
 
     public Kunde(int kid, String vorname, String nachname, String adresse, int laendercode, String status) {
         this.kid = kid;
@@ -31,14 +26,9 @@ public class Kunde
     }
 
     public Kunde() {
-      
+
     }
 
-    
-   
-   
-   
-   
     /**
      * @return the kid
      */
@@ -110,6 +100,7 @@ public class Kunde
     }
 
     /**
+     *
      * @param laendercode the laendercode to set
      */
     public void setLaendercode(int laendercode) {
@@ -117,9 +108,38 @@ public class Kunde
     }
 
     /**
+     * @author LL
+     * @param laendercode the laendercode to set
+     */
+    public void setLaendercode(String laendercode) {
+        if (laendercode.contains("Swi") || laendercode.contains("Schwe")|| laendercode.contains("Sui")) {
+            this.laendercode = 1;
+        } else if (laendercode.contains("Deut") || laendercode.contains("Germ")) {
+            this.laendercode = 2;
+        } else if (laendercode.contains("Fra")) {
+            this.laendercode = 3;
+        } else if (laendercode.contains("Neth")||laendercode.contains("Nied")||laendercode.contains("Holl")) {
+            this.laendercode = 4;
+        } else if (laendercode.contains("Ita")) {
+            this.laendercode = 5;
+        } else {
+            this.laendercode = -1;
+        }
+
+    }
+
+    /**
      * @param status the status to set
      */
     public void setStatus(String status) {
+        this.status = status;
+    }
+    
+       /**
+     * @param status the status to set
+     */
+    public void setStatus(int totalBalanc) {
+        //TODO
         this.status = status;
     }
 
@@ -136,6 +156,7 @@ public class Kunde
 
     /**
      * Abgeleitet von Equals
+     * @author LL
      * @param obj
      * @return ID von existirenden Kunde
      */
@@ -161,6 +182,5 @@ public class Kunde
         }
         return kid;
     }
-    
-    
+
 }
