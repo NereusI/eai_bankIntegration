@@ -112,15 +112,15 @@ public class Kunde {
      * @param laendercode the laendercode to set
      */
     public void setLaendercode(String laendercode) {
-        if (laendercode.contains("Swi") || laendercode.contains("Schwe")|| laendercode.contains("Sui")) {
+        if (laendercode.contains("Switzerland") || laendercode.contains("Schweiz")|| laendercode.contains("Suisse") || laendercode.contains("Svizzera")){
             this.laendercode = 1;
-        } else if (laendercode.contains("Deut") || laendercode.contains("Germ")) {
+        } else if (laendercode.contains("Deutschland") || laendercode.contains("Germamny")) {
             this.laendercode = 2;
         } else if (laendercode.contains("Fra")) {
             this.laendercode = 3;
         } else if (laendercode.contains("Neth")||laendercode.contains("Nied")||laendercode.contains("Holl")) {
             this.laendercode = 4;
-        } else if (laendercode.contains("Ita")) {
+        } else if (laendercode.contains("Ital")) {
             this.laendercode = 5;
         } else {
             this.laendercode = -1;
@@ -160,7 +160,7 @@ public class Kunde {
      * @param obj
      * @return ID von existirenden Kunde
      */
-    public int kundExistirt(Object obj) {
+    public int kundeExistiert(Object obj) {
         if (this == obj) {
             return -1;
         }

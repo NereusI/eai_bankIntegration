@@ -1,9 +1,7 @@
 package ch.fhnw.eai;
 
-
-import ch.fhnw.eai.jd.BankJDGeter;
+import ch.fhnw.eai.jd.BankJDGetter;
 import java.util.ArrayList;
-
 
 //import sun.swing.BakedArrayList;
 
@@ -12,7 +10,6 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Loïc
@@ -23,25 +20,20 @@ public class BankMigrationMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         System.out.println("Start");
-      //  BankJDGeter.getData();
+        System.out.println("Start");
+        //  BankJDGeter.getData();
         System.out.println("End");
-        
+
         ArrayList<Kunde> kunden = new ArrayList<Kunde>();
         ArrayList<Konto> kontos = new ArrayList<Konto>();
-        BankJDGeter bJD = new BankJDGeter();
-        bJD.getKontoKorent(kunden, kontos, BankJDGeter.kontoArt.KontoKorent);
-        bJD.getKontoKorent(kunden, kontos, BankJDGeter.kontoArt.SparKonto);
-        
+        BankJDGetter bJD = new BankJDGetter();
+        bJD.getKontoKorent(kunden, kontos, BankJDGetter.kontoArt.KontoKorent);
+        bJD.getKontoKorent(kunden, kontos, BankJDGetter.kontoArt.SparKonto);
+
         //TODO 1. Call VCT
-        
         //TODO 2. Set Kundenstatus
-        
         //TODO 3. Create / Save DB
-        
-        // ?autput
-        
-        
+        // ?output
     }
-    
+
 }

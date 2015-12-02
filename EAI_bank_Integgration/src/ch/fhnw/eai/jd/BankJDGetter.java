@@ -16,7 +16,7 @@ import javax.xml.ws.Holder;
  *
  * @author Loïc
  */
-public class BankJDGeter {
+public class BankJDGetter {
 
     public enum kontoArt {
         KontoKorent, SparKonto
@@ -47,7 +47,7 @@ public class BankJDGeter {
             }
             int kundeID;
             for (Kunde k : kunden) {
-                kundeID = k.kundExistirt(kunde);     //Existirt der Kunde Bereits
+                kundeID = k.kundeExistiert(kunde);     //Existirt der Kunde Bereits
                 if (kundeID >= 0) {    // Ja, konto an den Kunden Knüpfen
                     konto.setKid(kundeID);
                     break;
@@ -88,7 +88,7 @@ public class BankJDGeter {
         javax.xml.ws.Holder<java.lang.Float> kontostand = new Holder<>();
         javax.xml.ws.Holder<java.lang.String> bic = new Holder<>("");
 
-         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
+        ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.holeKontoKorrent(queryVorname, queryNachname, vorname, nachname, adresse, land, ranking, ibanKontonummer, kontostand, bic);
 
@@ -125,7 +125,7 @@ public class BankJDGeter {
         javax.xml.ws.Holder<java.lang.Long> kontonummer = new Holder<>();
         javax.xml.ws.Holder<java.lang.Long> kontostand = new Holder<>();
 
-         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
+        ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.holeSparkonto(queryVorname, queryNachname, vorname, nachname, strasse, plzOrt, zinsen, kontonummer, kontostand);
 

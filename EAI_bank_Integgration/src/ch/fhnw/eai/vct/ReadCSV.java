@@ -1,6 +1,8 @@
 package ch.fhnw.eai.vct;
 
 
+import ch.fhnw.eai.Konto;
+import ch.fhnw.eai.Kunde;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,7 +21,7 @@ import java.io.IOException;
  */
 public class ReadCSV {
     public static void main(String[] args) {
-/*
+
 	ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
         ch.sic.ibantool.RecordIban recordiban;
         
@@ -129,6 +131,6 @@ public class ReadCSV {
                 }
             }
         }
-    System.out.println("Done"); //*/
+    System.out.println("Done"); 
 }
 }
