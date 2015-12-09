@@ -95,6 +95,19 @@ public class Kunde {
     /**
      * @param adresse the adresse to set
      */
+    public void setAdresse(String strassenname, String plz, String stadt, String land) {
+        StringBuilder sb = new StringBuilder(); // content[2] = Strassenname, content[3] =  PLZ, content[4] =  Stadt, content[5] =  Land,
+        sb.append(strassenname);
+        sb.append(", ");
+        sb.append(plz);
+        sb.append(" ");
+        sb.append(stadt);
+        sb.append(" ");
+        sb.append(land);
+        String adresse = sb.toString();
+        this.adresse = adresse;
+    }
+    
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
@@ -131,17 +144,22 @@ public class Kunde {
     /**
      * @param status the status to set
      */
+    public void setStatus(int kontostand) {
+        String status = "not set";
+            if(kontostand < 100000){
+                status = "bronze";
+            }else if(kontostand > 100000 && kontostand < 250000){
+                status = "silber";
+            }else{
+                status = "gold";
+            }
+        this.status = status;
+    }
+    
     public void setStatus(String status) {
         this.status = status;
     }
     
-       /**
-     * @param status the status to set
-     */
-    public void setStatus(int totalBalanc) {
-        //TODO
-        this.status = status;
-    }
 
     @Override
     public String toString() {

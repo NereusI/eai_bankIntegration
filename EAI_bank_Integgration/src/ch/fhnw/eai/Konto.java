@@ -70,9 +70,14 @@ public class Konto
       /**
      * @param iban the iban to set
      */
-    public void setIban(String land, int bic, int kNr) {
-        //TODO
-        this.iban = land+bic+""+kNr;
+    public void setIban(String clearing, String kontonr) {
+        ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
+        ch.sic.ibantool.RecordIban recordiban;
+        recordiban = new ch.sic.ibantool. RecordIban ();
+        recordiban.BCPC = new StringBuffer(clearing);
+        recordiban.KoZe = new StringBuffer(kontonr);
+        recordiban = ibanclass.IBANConvert(recordiban);
+        this.iban = recordiban.Iban.toString();
     }
 
     /**

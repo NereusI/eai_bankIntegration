@@ -14,32 +14,32 @@ package ch.fhnw.eai.vct;
 public class NameSplitter {
     
 
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String[]  names =  new String [8];
-		names[0] ="Roger Mueller";
-		names[1] ="Aldo von Wangenheim";
-		names[2] ="F. van Harmelen";
-		names[3] ="M. M. Richter";
-		names[4] ="Otthein Herzog";
-		names[5] ="Dr. Oliver Bendel";
-		names[6] ="Stella Gatziu Grivas";
-		names[7] ="Knut HINKELMANN";
+		//String[]  names =  new String [8];
+		//names[0] ="Roger Mueller";
+		//names[1] ="Aldo von Wangenheim";
+		//names[2] ="F. van Harmelen";
+		//names[3] ="M. M. Richter";
+		//names[4] ="Otthein Herzog";
+		//names[5] ="Dr. Oliver Bendel";
+		//names[6] ="Stella Gatziu Grivas";
+		//names[7] ="Knut HINKELMANN";
 
-		NameSplitter ns = new NameSplitter();
+		//NameSplitter ns = new NameSplitter();
 		
-		for ( String name : names){
+		//for ( String name : names){
 			 
-			String nameSplite[] =ns.splitter(name);
+			//String nameSplite[] =ns.splitter(name);
 			
 			
 			
 		//	System.out.println("vor. "+nameSplite[0]+". Nachname: "+nameSplite[1]);
-		}
+		//}
 		
 		
 
-	}
+	//}
 	
 	public String[] splitter (String fullName){
 		String[] parts = fullName.split(" ");

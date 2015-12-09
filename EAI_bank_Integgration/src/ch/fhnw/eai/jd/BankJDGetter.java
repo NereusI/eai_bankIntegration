@@ -105,6 +105,7 @@ public class BankJDGetter {
         konto.setKontostand((int) (kontostand.value*100)); //Float to int
         konto.setKontoart(1);
         
+        System.out.println(konto.toString());
 
     }
 
@@ -144,6 +145,7 @@ public class BankJDGetter {
         konto.setKontostand((int) (kontostand.value*(1+zinsen.value) *100)); //Zins Anrechnen; Long to int
         konto.setKontoart(2);
         
+        System.out.println(konto.toString());
 
     }
 
@@ -153,12 +155,12 @@ public class BankJDGetter {
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.printSparkonto();
     }
-
+    
     private static java.util.List<java.lang.String> listeKontokorrentNachname() {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         return port.listeKontokorrentNachname();
     }
    
-
+    
 }
