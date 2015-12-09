@@ -30,6 +30,7 @@ public class ReadCSV {
         Konto konto = new Konto();
         Kunde kunde = new Kunde();
         NameSplitter ns = new NameSplitter();
+        int kontoID = 1;
         
         
         try {
@@ -41,8 +42,8 @@ public class ReadCSV {
                     continue;
                 }
                 else{
-                        if(!(content[6]).contains("Firma")){
-                        konto.setKid(0);
+                    if(!(content[6]).contains("Firma")){
+                        konto.setKid(kontoID);
                         konto.setIban(content[9], content[7]);
                         konto.setKontoart(1);
                         konto.setKontostand((int) Math.round(Double.parseDouble(content[8])));      
@@ -56,12 +57,12 @@ public class ReadCSV {
                         kunde.setLaendercode(content[5]);
                         kunde.setStatus((int) Math.round(Double.parseDouble(content[8])));
                         System.out.println(kunde.toString());
-                        }else{
-                            System.out.println("Firmenkonten dürfen nicht migriert werden");
-                        }
+                        kontoID++;
+                    }else{
+                        System.out.println("Firmenkonten dürfen nicht migriert werden");
                     }
-             
                 }
+            }
             
         }catch(FileNotFoundException e){
             e.printStackTrace();
