@@ -3,6 +3,7 @@ package ch.fhnw.eai;
 import ch.fhnw.eai.jd.BankJDGetter;
 import ch.fhnw.eai.vct.ReadCSV;
 import java.util.ArrayList;
+import ch.fhnw.eai.WriteIntoCSV;
 
 //import sun.swing.BakedArrayList;
 
@@ -48,6 +49,10 @@ public class BankMigrationMain {
         ArrayList<Konto> kontosJDSpar = bJD.getKontoSpar();
         main.zusamenführenKontoKunde(kundenJDSpar, kontosJDSpar);
 
+        WriteIntoCSV w = new WriteIntoCSV();
+        w.generateCsvFileForAccounts("./konten.csv", main.kontos);
+        w.generateCsvFileForClients("./kunden.csv", main.kunden);
+                
         for (Kunde kund : main.kunden) {
             int guthaben = 0;
             for (Konto kont : main.kontos) {
