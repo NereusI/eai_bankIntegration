@@ -1,7 +1,8 @@
 package ch.fhnw.eai;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
-
 
 /**
  *
@@ -107,7 +108,7 @@ public class Kunde {
         String adresse = sb.toString();
         this.adresse = adresse;
     }
-    
+
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
@@ -125,13 +126,13 @@ public class Kunde {
      * @param laendercode the laendercode to set
      */
     public void setLaendercode(String laendercode) {
-        if (laendercode.contains("Switzerland") || laendercode.contains("Schweiz")|| laendercode.contains("Suisse") || laendercode.contains("Svizzera")){
+        if (laendercode.contains("Switzerland") || laendercode.contains("Schweiz") || laendercode.contains("Suisse") || laendercode.contains("Svizzera")) {
             this.laendercode = 1;
         } else if (laendercode.contains("Deutschland") || laendercode.contains("Germamny")) {
             this.laendercode = 2;
         } else if (laendercode.contains("Fra")) {
             this.laendercode = 3;
-        } else if (laendercode.contains("Neth")||laendercode.contains("Nied")||laendercode.contains("Holl")) {
+        } else if (laendercode.contains("Neth") || laendercode.contains("Nied") || laendercode.contains("Holl")) {
             this.laendercode = 4;
         } else if (laendercode.contains("Ital")) {
             this.laendercode = 5;
@@ -146,20 +147,19 @@ public class Kunde {
      */
     public void setStatus(int kontostand) {
         String status = "not set";
-            if(kontostand < 100000){
-                status = "bronze";
-            }else if(kontostand > 100000 && kontostand < 250000){
-                status = "silber";
-            }else{
-                status = "gold";
-            }
+        if (kontostand < 100000) {
+            status = "bronze";
+        } else if (kontostand > 100000 && kontostand < 250000) {
+            status = "silber";
+        } else {
+            status = "gold";
+        }
         this.status = status;
     }
-    
+
     public void setStatus(String status) {
         this.status = status;
     }
-    
 
     @Override
     public String toString() {
@@ -174,6 +174,7 @@ public class Kunde {
 
     /**
      * Abgeleitet von Equals
+     *
      * @author LL
      * @param obj
      * @return ID von existirenden Kunde
@@ -201,4 +202,41 @@ public class Kunde {
         return kid;
     }
 
+    
+    private String[] splitter(String fullName) {
+        String[] parts = fullName.split(" ");
+        ArrayList<String> partsList = new ArrayList<String>(Arrays.asList(parts));
+        String[] nameSplited = new String[2];
+        nameSplited[0] = "";
+        nameSplited[1] = "";
+
+        //Move the title of a person to the family Name and short the Array list.
+        for (int position = 0; position < partsList.size(); position++) {
+            if (partsList.get(position).contains("Dr.") | partsList.get(position).contains("Prof")) {
+                nameSplited[1] += partsList.get(position);
+                partsList.remove(position);
+
+            }
+        }
+        nameSplited[0] = partsList.get(0);
+        if (partsList.size() == 2) {
+            nameSplited[1] += partsList.get(1);
+        } else if (partsList.get(1).contains(("von")) || partsList.get(1).contains(("van"))) {
+            nameSplited[1] += partsList.get(1);
+            nameSplited[1] += partsList.get(2);
+        } else if (partsList.get(1).matches(".\\.")) { //z.B. F. --> first name
+            nameSplited[0] += partsList.get(1);
+            nameSplited[1] += partsList.get(2);
+        } else {
+            nameSplited[0] += partsList.get(1);
+            for (int x = 2; x < partsList.size(); x++) {
+                nameSplited[1] += partsList.get(x);
+            }
+            System.out.println("Following name couldn’t be split correctly: " + nameSplited[0] + "; " + nameSplited[1]);
+        }
+        
+        vorname = nameSplited[0];
+        nachname = nameSplited[1];
+        return nameSplited;
+    }
 }
