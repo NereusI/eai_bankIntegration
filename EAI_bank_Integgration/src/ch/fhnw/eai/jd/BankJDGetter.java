@@ -29,7 +29,6 @@ public class BankJDGetter {
     private static double wechselKurs = 1.1;
 
     /**
-     * TODO Test
      *
      * Liest die daten aus de WSDL Datei und schreibt diese in die übergebene
      * arrays (call bay referance)
@@ -55,23 +54,8 @@ public class BankJDGetter {
                 kundeSpar.add(kunde);
                 kontoSpar.add(konto);
             }
-
-            /*    int kundeID;
-            for (Kunde k : kunden) {
-                kundeID = k.kundeExistiert(kunde);     //Existirt der Kunde Bereits
-                if (kundeID >= 0) {    // Ja, konto an den Kunden Knüpfen
-                    konto.setKid(kundeID);
-                    break;
-                }
-                if (kundeID < 0) {
-                    int newKundenID = kunden.size() + 1;
-                    kunde.setKid(newKundenID);
-                    kunden.add(kunde);
-                    konto.setKid(newKundenID);
-                }
-            }
-            kontos.add(konto);*/
         }
+        printKontokorrent();
     }
 
     private static void printKontokorrent() {
@@ -108,7 +92,7 @@ public class BankJDGetter {
         kunde.setVorname(vorname.value);
         kunde.setNachname(nachname.value);
         kunde.setAdresse(adresse.value);
-        kunde.setLaendercode("");
+        kunde.setLaendercode(land.value);
 
         konto.setKid(-1);
         konto.setIban(ibanKontonummer.value);
@@ -123,8 +107,14 @@ public class BankJDGetter {
         return port.listeSparkontoNachname();
     }
 
+    /**
+     * 
+     * @param queryVorname
+     * @param queryNachname
+     * @param kunde
+     * @param konto 
+     */
     private void holeSparkonto(String queryVorname, String queryNachname, Kunde kunde, Konto konto) {
-
         javax.xml.ws.Holder<java.lang.String> vorname = new Holder<>("");
         javax.xml.ws.Holder<java.lang.String> nachname = new Holder<>("");
         javax.xml.ws.Holder<java.lang.String> strasse = new Holder<>("");
@@ -137,27 +127,26 @@ public class BankJDGetter {
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.holeSparkonto(queryVorname, queryNachname, vorname, nachname, strasse, plzOrt, zinsen, kontonummer, kontostand);
 
-        //TODO von query in kunde / konto schreiben.
+ 
         kunde.setKid(-1);
         kunde.setVorname(vorname.value);
         kunde.setNachname(nachname.value);
         kunde.setAdresse(strasse.value + ", " + plzOrt.value);
-        kunde.setLaendercode("");
+        kunde.setLaendercode("CH");
         kunde.setStatus("");
 
         konto.setKid(-1);
-        konto.setIban(kontonummer.value + ""); //TODO
+        konto.setIban(206+"", kontonummer.value + ""); 
         konto.setKontostand((int) (kontostand.value * (1 + zinsen.value) * 100 * wechselKurs)); //Zins Anrechnen; Long to int
         konto.setKontoart(2);
 
     }
 
-    // TO delet
-    private static void printSparkonto() {
-        ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
-        ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
-        port.printSparkonto();
-    }
+//    private static void printSparkonto() {
+//        ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
+//        ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
+//        port.printSparkonto();
+//    }
 
     private static java.util.List<java.lang.String> listeKontokorrentNachname() {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();

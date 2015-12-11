@@ -126,17 +126,17 @@ public class Kunde {
      * @param laendercode the laendercode to set
      */
     public void setLaendercode(String laendercode) {
-        if (laendercode.contains("Switzerland") || laendercode.contains("Schweiz") || laendercode.contains("Suisse") || laendercode.contains("Svizzera")) {
-            this.laendercode = 1;
-        } else if (laendercode.contains("Deutschland") || laendercode.contains("Germamny")) {
+        if (laendercode.contains("Deutschland") || laendercode.contains("Germany")) {
             this.laendercode = 2;
         } else if (laendercode.contains("Fra")) {
             this.laendercode = 3;
-        } else if (laendercode.contains("Neth") || laendercode.contains("Nied") || laendercode.contains("Holl")) {
+        } else if (laendercode.contains("Neth") || laendercode.contains("Nied") || laendercode.contains("Holl")|| laendercode.contains("NL")) {
             this.laendercode = 4;
         } else if (laendercode.contains("Ital")) {
             this.laendercode = 5;
-        } else {
+        } else  if (laendercode.contains("Switzerland") || laendercode.contains("Schweiz") || laendercode.contains("Suisse") || laendercode.contains("Svizzera")|| laendercode.contains("CH")) {
+            this.laendercode = 1;
+        } else{
             this.laendercode = -1;
         }
 
@@ -146,14 +146,16 @@ public class Kunde {
      * @param status the status to set
      */
     public void setStatus(int kontostand) {
+        int intMultiplikator=100;
         String status = "not set";
-        if (kontostand < 100000) {
-            status = "bronze";
-        } else if (kontostand > 100000 && kontostand < 250000) {
+          if (kontostand > 250000*intMultiplikator) {
+            status = "gold";
+        } else if (kontostand > 100000*intMultiplikator && kontostand < 250000*intMultiplikator) {
             status = "silber";
         } else {
-            status = "gold";
+            status = "bronze";
         }
+        
         this.status = status;
     }
 
@@ -218,7 +220,7 @@ public class Kunde {
 
             }
         }
-        nameSplited[0] = partsList.get(0);
+        nameSplited[0] = partsList.get(0)+" ";
         if (partsList.size() == 2) {
             nameSplited[1] += partsList.get(1);
         } else if (partsList.get(1).contains(("von")) || partsList.get(1).contains(("van"))) {
@@ -230,7 +232,7 @@ public class Kunde {
         } else {
             nameSplited[0] += partsList.get(1);
             for (int x = 2; x < partsList.size(); x++) {
-                nameSplited[1] += partsList.get(x);
+                nameSplited[1] += partsList.get(x) +" ";
             }
             System.out.println("Following name couldn’t be split correctly: " + nameSplited[0] + "; " + nameSplited[1]);
         }

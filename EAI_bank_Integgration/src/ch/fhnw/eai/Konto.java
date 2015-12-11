@@ -1,9 +1,5 @@
 package ch.fhnw.eai;
 
-/*
- *TODO IBAN
- */
-
 /**
  *
  * @author Tobias

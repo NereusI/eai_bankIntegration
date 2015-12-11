@@ -48,6 +48,18 @@ public class BankMigrationMain {
         ArrayList<Konto> kontosJDSpar = bJD.getKontoSpar();
         main.zusamenführenKontoKunde(kundenJDSpar, kontosJDSpar);
 
+        for (Kunde kund : main.kunden) {
+            int guthaben = 0;
+            for (Konto kont : main.kontos) {
+                if (kont.getKid() == kund.getKid()) {
+                    guthaben += kont.getKontostand();
+                }
+            }
+            kund.setStatus(guthaben);
+        }
+        
+        
+        
         for (Kunde kunde : main.kunden) {
             System.out.println(kunde);
         }
@@ -63,8 +75,8 @@ public class BankMigrationMain {
         for (int i = 0; i < newKunden.size(); i++) {
             Kunde kunde = newKunden.get(i);
             Konto konto = newKonten.get(i);
-            int kundeID=-1;
-            boolean newKunde=false;
+            int kundeID = -1;
+            boolean newKunde = false;
 
             for (Kunde k : kunden) { //
                 kundeID = k.kundeExistiert(kunde);     //Existirt der Kunde Bereits
@@ -75,23 +87,20 @@ public class BankMigrationMain {
                 if (kundeID < 0) {
                     kundeID = kunden.size() + 1;
                     kunde.setKid(kundeID);
-                    newKunde=true;
-                  
+                    newKunde = true;
+
                     konto.setKid(kundeID);
                 }
             }
-            
-            if(kundeID==8){
-                System.out.println("ch.fhnw.eai.BankMigrationMain.zusamenführenKontoKunde()");
-            }
+
             if (kunden.size() < 1) {
                 kundeID = kunden.size() + 1;
                 kunde.setKid(kundeID);
                 kunden.add(kunde);
                 konto.setKid(kundeID);
             }
-            if (newKunde){
-                  kunden.add(kunde);
+            if (newKunde) {
+                kunden.add(kunde);
             }
             kontos.add(konto);
         }
