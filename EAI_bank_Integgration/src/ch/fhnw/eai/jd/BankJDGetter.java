@@ -21,17 +21,23 @@ public class BankJDGetter {
     public enum kontoArt {
         KontoKorent, SparKonto
     }
+    
+   private ArrayList<Kunde>  kundeKK = new ArrayList<>();
+   private ArrayList<Konto>  kontoKK = new ArrayList<>();
+   private ArrayList<Kunde>  kundeSpar = new ArrayList<>();
+   private ArrayList<Konto>  kontoSpar = new ArrayList<>();
+   private static double  wechselKurs = 1.1;
+    
 
     /**
      * TODO Test
      *
      * Liest die daten aus de WSDL Datei und schreibt diese in die übergebene
      * arrays (call bay referance)
-     * @param kunden liste aller kunden welcheerweitert werden soll
-     * @param kontos liste der kontos welche erweitert werden soll
      * @param ka enum KontoKorent, SparKonto
      */
-    public void getKontoKorent(ArrayList<Kunde> kunden, ArrayList<Konto> kontos, kontoArt ka) {
+    public void getKontoKorent( kontoArt ka) {
+        
         List<String> nachname = listeSparkontoNachname();
         if (ka == kontoArt.KontoKorent) {
             nachname = listeKontokorrentNachname();
@@ -42,10 +48,18 @@ public class BankJDGetter {
         for (String name : nachname) {
             if (ka == kontoArt.KontoKorent) {
                 holeKontoKorrent("", name, kunde, konto);
+                kundeKK.add(kunde);
+                kontoKK.add(konto);
             } else {
                 holeSparkonto("", name, kunde, konto);
+                kundeSpar.add(kunde);
+                kontoSpar.add(konto);
             }
-            int kundeID;
+            
+          
+            
+            
+        /*    int kundeID;
             for (Kunde k : kunden) {
                 kundeID = k.kundeExistiert(kunde);     //Existirt der Kunde Bereits
                 if (kundeID >= 0) {    // Ja, konto an den Kunden Knüpfen
@@ -59,7 +73,7 @@ public class BankJDGetter {
                     konto.setKid(newKundenID);
                 }
             }
-            kontos.add(konto);
+            kontos.add(konto);*/
         }
     }
 
@@ -102,12 +116,9 @@ public class BankJDGetter {
         
         konto.setKid(-1);
         konto.setIban(ibanKontonummer.value);
-        konto.setKontostand((int) (kontostand.value*100)); //Float to int
+        konto.setKontostand((int) (kontostand.value*100*wechselKurs)); //Float to int
         konto.setKontoart(1);
-        
-        System.out.println(konto.toString());
-        
-
+       
     }
 
 
@@ -143,7 +154,7 @@ public class BankJDGetter {
         
         konto.setKid(-1);
         konto.setIban(kontonummer.value+""); //TODO
-        konto.setKontostand((int) (kontostand.value*(1+zinsen.value) *100)); //Zins Anrechnen; Long to int
+        konto.setKontostand((int) (kontostand.value*(1+zinsen.value) *100* wechselKurs)); //Zins Anrechnen; Long to int
         konto.setKontoart(2);
         
 
@@ -160,6 +171,22 @@ public class BankJDGetter {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         return port.listeKontokorrentNachname();
+    }
+
+    public ArrayList<Kunde> getKundeKK() {
+        return kundeKK;
+    }
+
+    public ArrayList<Konto> getKontoKK() {
+        return kontoKK;
+    }
+
+    public ArrayList<Kunde> getKundeSpar() {
+        return kundeSpar;
+    }
+
+    public ArrayList<Konto> getKontoSpar() {
+        return kontoSpar;
     }
    
     
