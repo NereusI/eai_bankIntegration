@@ -21,31 +21,31 @@ public class BankJDGetter {
     public enum kontoArt {
         KontoKorent, SparKonto
     }
-    
-   private ArrayList<Kunde>  kundeKK = new ArrayList<>();
-   private ArrayList<Konto>  kontoKK = new ArrayList<>();
-   private ArrayList<Kunde>  kundeSpar = new ArrayList<>();
-   private ArrayList<Konto>  kontoSpar = new ArrayList<>();
-   private static double  wechselKurs = 1.1;
-    
+
+    private ArrayList<Kunde> kundeKK = new ArrayList<>();
+    private ArrayList<Konto> kontoKK = new ArrayList<>();
+    private ArrayList<Kunde> kundeSpar = new ArrayList<>();
+    private ArrayList<Konto> kontoSpar = new ArrayList<>();
+    private static double wechselKurs = 1.1;
 
     /**
      * TODO Test
      *
      * Liest die daten aus de WSDL Datei und schreibt diese in die übergebene
      * arrays (call bay referance)
+     *
      * @param ka enum KontoKorent, SparKonto
      */
-    public void getKontoKorent( kontoArt ka) {
-        
+    public void getKontoKorent(kontoArt ka) {
+
         List<String> nachname = listeSparkontoNachname();
         if (ka == kontoArt.KontoKorent) {
             nachname = listeKontokorrentNachname();
         }
-        Kunde kunde = new Kunde();
-        Konto konto = new Konto();
 
         for (String name : nachname) {
+            Kunde kunde = new Kunde();
+            Konto konto = new Konto();
             if (ka == kontoArt.KontoKorent) {
                 holeKontoKorrent("", name, kunde, konto);
                 kundeKK.add(kunde);
@@ -55,11 +55,8 @@ public class BankJDGetter {
                 kundeSpar.add(kunde);
                 kontoSpar.add(konto);
             }
-            
-          
-            
-            
-        /*    int kundeID;
+
+            /*    int kundeID;
             for (Kunde k : kunden) {
                 kundeID = k.kundeExistiert(kunde);     //Existirt der Kunde Bereits
                 if (kundeID >= 0) {    // Ja, konto an den Kunden Knüpfen
@@ -106,21 +103,19 @@ public class BankJDGetter {
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.holeKontoKorrent(queryVorname, queryNachname, vorname, nachname, adresse, land, ranking, ibanKontonummer, kontostand, bic);
 
-        
         // Save the kustumer & Client
         kunde.setKid(-1);
         kunde.setVorname(vorname.value);
         kunde.setNachname(nachname.value);
         kunde.setAdresse(adresse.value);
         kunde.setLaendercode("");
-        
+
         konto.setKid(-1);
         konto.setIban(ibanKontonummer.value);
-        konto.setKontostand((int) (kontostand.value*100*wechselKurs)); //Float to int
+        konto.setKontostand((int) (kontostand.value * 100 * wechselKurs)); //Float to int
         konto.setKontoart(1);
-       
-    }
 
+    }
 
     private static java.util.List<java.lang.String> listeSparkontoNachname() {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
@@ -146,17 +141,14 @@ public class BankJDGetter {
         kunde.setKid(-1);
         kunde.setVorname(vorname.value);
         kunde.setNachname(nachname.value);
-        kunde.setAdresse(strasse.value+", "+plzOrt.value);
+        kunde.setAdresse(strasse.value + ", " + plzOrt.value);
         kunde.setLaendercode("");
         kunde.setStatus("");
-        
-        
-        
+
         konto.setKid(-1);
-        konto.setIban(kontonummer.value+""); //TODO
-        konto.setKontostand((int) (kontostand.value*(1+zinsen.value) *100* wechselKurs)); //Zins Anrechnen; Long to int
+        konto.setIban(kontonummer.value + ""); //TODO
+        konto.setKontostand((int) (kontostand.value * (1 + zinsen.value) * 100 * wechselKurs)); //Zins Anrechnen; Long to int
         konto.setKontoart(2);
-        
 
     }
 
@@ -166,7 +158,7 @@ public class BankJDGetter {
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.printSparkonto();
     }
-    
+
     private static java.util.List<java.lang.String> listeKontokorrentNachname() {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
@@ -188,6 +180,5 @@ public class BankJDGetter {
     public ArrayList<Konto> getKontoSpar() {
         return kontoSpar;
     }
-   
-    
+
 }

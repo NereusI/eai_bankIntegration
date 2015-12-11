@@ -63,7 +63,7 @@ public class BankMigrationMain {
         for (int i = 0; i < newKunden.size(); i++) {
             Kunde kunde = newKunden.get(i);
             Konto konto = newKonten.get(i);
-            int kundeID;
+            int kundeID=-1;
             boolean newKunde=false;
 
             for (Kunde k : kunden) { //
@@ -79,6 +79,10 @@ public class BankMigrationMain {
                   
                     konto.setKid(kundeID);
                 }
+            }
+            
+            if(kundeID==8){
+                System.out.println("ch.fhnw.eai.BankMigrationMain.zusamenführenKontoKunde()");
             }
             if (kunden.size() < 1) {
                 kundeID = kunden.size() + 1;
