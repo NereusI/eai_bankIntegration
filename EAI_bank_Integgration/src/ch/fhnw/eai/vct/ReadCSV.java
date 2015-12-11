@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /*
@@ -20,25 +21,27 @@ import java.io.IOException;
  * @author Tobias
  */
 public class ReadCSV {
-    public static void main(String[] args) {
-
-        String csvFile = "C:\\EAI_Project\\EAI Project\\semesteraufgabe\\Bank-VCT\\Account.csv";
-        BufferedReader br = null;
-        String line = "";
-        String csvSplitBy = ",";
+   
+    String csvFile = "C:\\EAI_Project\\EAI Project\\semesteraufgabe\\Bank-VCT\\Account.csv";
+    BufferedReader br = null;
+    String line = "";
+    String csvSplitBy = ",";
+    Konto konto = new Konto();
+    Kunde kunde = new Kunde();
+    int kontoID = 1;
+        
+    
+    
+    
+    public ArrayList<Konto> holeKonten() {
+        ArrayList<Konto> alleKontenVCT = new ArrayList<Konto>();
         int iteration = 0;
-        Konto konto = new Konto();
-        Kunde kunde = new Kunde();
-        NameSplitter ns = new NameSplitter();
-        int kontoID = 1;
-        
-        
         try {
             br = new BufferedReader(new FileReader(csvFile));
             while((line = br.readLine()) != null){
                 String[] content = line.split(csvSplitBy);
                 if(iteration == 0) {
-                    iteration++;  
+                    iteration++;
                     continue;
                 }
                 else{
@@ -47,16 +50,49 @@ public class ReadCSV {
                         konto.setIban(content[9], content[7]);
                         konto.setKontoart(1);
                         konto.setKontostand((int) Math.round(Double.parseDouble(content[8])));      
-                        System.out.println(konto.toString());
-
-                        kunde.setKid(Integer.parseInt(content[0]));
-                        String[] name= ns.splitter(content[1]);
+                        alleKontenVCT.add(konto);
+                    }else{
+                        System.out.println("Firmenkonten dürfen nicht migriert werden");
+                    }
+                }
+            }
+            
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException ex) {
+            ex.printStackTrace();
+	}finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+            }
+        }
+        return alleKontenVCT;
+    }
+    public ArrayList<Kunde> holeKunden() {
+        ArrayList<Kunde> alleKundenVCT = new ArrayList<Kunde>();
+        int iter = 0;
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            while((line = br.readLine()) != null){
+                String[] content = line.split(csvSplitBy);
+                if(iter == 0) {
+                    iter++;  
+                    continue;
+                }
+                else{
+                    if(!(content[6]).contains("Firma")){
+                        kunde.setKid(1);
+                        String[] name= kunde.splitter(content[1]);
                         kunde.setVorname(name[0]);
                         kunde.setNachname(name[1]);
                         kunde.setAdresse(content[2], content[3], content[4], content[5]);
                         kunde.setLaendercode(content[5]);
                         kunde.setStatus((int) Math.round(Double.parseDouble(content[8])));
-                        System.out.println(kunde.toString());
+                        alleKundenVCT.add(kunde);
                         kontoID++;
                     }else{
                         System.out.println("Firmenkonten dürfen nicht migriert werden");
@@ -67,7 +103,7 @@ public class ReadCSV {
         }catch(FileNotFoundException e){
             e.printStackTrace();
         }catch (IOException ex) {
-		ex.printStackTrace();
+            ex.printStackTrace();
 	}finally {
             if (br != null) {
                 try {
@@ -77,6 +113,9 @@ public class ReadCSV {
                 }
             }
         }
-    System.out.println("Done"); 
-}
+        return alleKundenVCT;
+    }
+
+   
+    
 }

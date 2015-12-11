@@ -106,6 +106,7 @@ public class BankJDGetter {
         konto.setKontoart(1);
         
         System.out.println(konto.toString());
+        
 
     }
 
@@ -145,7 +146,6 @@ public class BankJDGetter {
         konto.setKontostand((int) (kontostand.value*(1+zinsen.value) *100)); //Zins Anrechnen; Long to int
         konto.setKontoart(2);
         
-        System.out.println(konto.toString());
 
     }
 

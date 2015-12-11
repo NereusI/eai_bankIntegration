@@ -203,7 +203,7 @@ public class Kunde {
     }
 
     
-    private String[] splitter(String fullName) {
+    public String[] splitter(String fullName) {
         String[] parts = fullName.split(" ");
         ArrayList<String> partsList = new ArrayList<String>(Arrays.asList(parts));
         String[] nameSplited = new String[2];
