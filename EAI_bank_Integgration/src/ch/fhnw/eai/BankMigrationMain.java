@@ -3,15 +3,8 @@ package ch.fhnw.eai;
 import ch.fhnw.eai.jd.BankJDGetter;
 import ch.fhnw.eai.vct.ReadCSV;
 import java.util.ArrayList;
-import ch.fhnw.eai.WriteIntoCSV;
 
-//import sun.swing.BakedArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author Loïc
@@ -25,20 +18,15 @@ public class BankMigrationMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Start");
-        //  BankJDGeter.getData();
-
+        
+        //Prepare the information in the different instance.
         BankJDGetter bJD = new BankJDGetter();
         bJD.getKontoKorent(BankJDGetter.kontoArt.KontoKorent);
         bJD.getKontoKorent(BankJDGetter.kontoArt.SparKonto);
-
-        //TODO 1. Call VCT
-        //TODO 2. Set Kundenstatus
-        //TODO 3. Create / Save DB
-        // ?output
         ReadCSV bankVCT = new ReadCSV();
         BankMigrationMain main = new BankMigrationMain();
 
+        //Pull the information out of the instance and merge them together 
         ArrayList<Kunde> kundenVCT = bankVCT.holeKunden();
         ArrayList<Konto> kontenVCT = bankVCT.holeKonten();
         main.zusamenführenKontoKunde(kundenVCT, kontenVCT);
@@ -49,10 +37,12 @@ public class BankMigrationMain {
         ArrayList<Konto> kontosJDSpar = bJD.getKontoSpar();
         main.zusamenführenKontoKunde(kundenJDSpar, kontosJDSpar);
 
+        //Write each table in a CSV
         WriteIntoCSV w = new WriteIntoCSV();
         w.generateCsvFileForAccounts("./konten.csv", main.kontos);
         w.generateCsvFileForClients("./kunden.csv", main.kunden);
-                
+
+       //Print additionally the customer and the accounts in the console 
         for (Kunde kund : main.kunden) {
             int guthaben = 0;
             for (Konto kont : main.kontos) {
@@ -62,9 +52,7 @@ public class BankMigrationMain {
             }
             kund.setStatus(guthaben);
         }
-        
-        
-        
+
         for (Kunde kunde : main.kunden) {
             System.out.println(kunde);
         }
@@ -76,6 +64,12 @@ public class BankMigrationMain {
 
     }
 
+    /**
+     * Add the customer and his/her account to the list of existing customer.
+     * If the costumer already exists. In the account the customer ID will be adapted whiteout creating a new costumer.
+     * @param newKunden List of new costumer, the algorithm to make shore the costumer dose not already exist is in the Class Kunde.
+     * @param newKonten The accounts must be placed in the list in the same order (size) then the costumer
+     */
     private void zusamenführenKontoKunde(ArrayList<Kunde> newKunden, ArrayList<Konto> newKonten) {
         for (int i = 0; i < newKunden.size(); i++) {
             Kunde kunde = newKunden.get(i);
@@ -89,21 +83,15 @@ public class BankMigrationMain {
                     konto.setKid(kundeID);
                     break;
                 }
-                if (kundeID < 0) {
-                    kundeID = kunden.size() + 1;
-                    kunde.setKid(kundeID);
-                    newKunde = true;
 
-                    konto.setKid(kundeID);
-                }
             }
-
-            if (kunden.size() < 1) {
+            if (kundeID < 0) {
                 kundeID = kunden.size() + 1;
                 kunde.setKid(kundeID);
-                kunden.add(kunde);
+                newKunde = true;
                 konto.setKid(kundeID);
             }
+
             if (newKunde) {
                 kunden.add(kunde);
             }

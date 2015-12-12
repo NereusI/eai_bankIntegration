@@ -1,18 +1,13 @@
 KID,Vorname,Nachname,Adresse,Ländercode,Status
 1,Roger ,Mueller,Riggenbachstrasse 12, 4600 Olten Switzerland,1,bronze
-2,Aldo ,vonWangenheim,Rue de la Chanson 3a, 1205 Genf Switzerland,1,bronze
-3,F. ,vanHarmelen,Amstraat 12, 1089HE Amsterdam The Netherlands,4,bronze
+2,Aldo ,von Wangenheim,Rue de la Chanson 3a, 1205 Genf Switzerland,1,bronze
+3,F. ,van Harmelen,Amstraat 12, 1089HE Amsterdam The Netherlands,4,bronze
 4,M. M.,Richter,Universit�_tsgasse 2, 67655 Kaiserslautern Germany,2,bronze
 5,Otthein ,Herzog,Hinter dem Deich 2, 18119 Warnem�_nde Germany,2,bronze
 6,Oliver ,Dr.Bendel,Kastelgasse 31, 8001 Z�_rich Switzerland,1,bronze
 7,Stella Gatziu,Grivas ,Blocherweg 3, 8704 Herrliberg-Feldmeilen Switzerland,1,bronze
 8,Knut ,HINKELMANN,Am Wald 3078, 4616 Kappel Schweiz,1,bronze
-9,Roger,Mueller,Riggenbachstrasse 12, 4600 Olten,1,null
-10,A.,Wangenheim,Rue de la Chanson 3a, 1205 Genf,1,null
-11,F.,van Harmelen,Amstraat 12, 1089HE Amsterdam,4,null
-12,Bendel,Oliver,Kastelgasse 31, 8001 ZH,1,null
-13,Knut,Hinkelmann,Weit-Weg Weg 1665, 4616 Kappel,1,null
-14,Roger,Mueller,Riggenbachstrasse, , 4600 Olten,1,
-15,Michael M.,Richter,Universitätsgasse 2, 67655 Kaiserslautern,1,
-16,Stiliani,Gatziu,Blocherweg 2, 8704 Herrliberg-Feldmeilen,1,
-17,Rainer,Telesko,Am Berg 2, 4600 Olten,1,
+9,Knut,Hinkelmann,Weit-Weg Weg 1665, 4616 Kappel,1,null
+10,Michael M.,Richter,Universitätsgasse 2, 67655 Kaiserslautern,1,
+11,Stiliani,Gatziu,Blocherweg 2, 8704 Herrliberg-Feldmeilen,1,
+12,Rainer,Telesko,Am Berg 2, 4600 Olten,1,

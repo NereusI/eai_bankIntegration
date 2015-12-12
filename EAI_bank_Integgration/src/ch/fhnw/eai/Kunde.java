@@ -130,32 +130,33 @@ public class Kunde {
             this.laendercode = 2;
         } else if (laendercode.contains("Fra")) {
             this.laendercode = 3;
-        } else if (laendercode.contains("Neth") || laendercode.contains("Nied") || laendercode.contains("Holl")|| laendercode.contains("NL")) {
+        } else if (laendercode.contains("Neth") || laendercode.contains("Nied") || laendercode.contains("Holl") || laendercode.contains("NL")) {
             this.laendercode = 4;
         } else if (laendercode.contains("Ital")) {
             this.laendercode = 5;
-        } else  if (laendercode.contains("Switzerland") || laendercode.contains("Schweiz") || laendercode.contains("Suisse") || laendercode.contains("Svizzera")|| laendercode.contains("CH")) {
+        } else if (laendercode.contains("Switzerland") || laendercode.contains("Schweiz") || laendercode.contains("Suisse") || laendercode.contains("Svizzera") || laendercode.contains("CH")) {
             this.laendercode = 1;
-        } else{
+        } else {
             this.laendercode = -1;
         }
 
     }
 
     /**
-     * @param status the status to set
+     * Set Status depending the amount the bank customer owns. The value where delved by the customer
+     * As the customer would like to have the account as int (  *100) it has to be taken in count when the evaluation is set.
+     * @param status The total amount of money a customer has. The value real will not be saved at this point.
      */
     public void setStatus(int kontostand) {
-        int intMultiplikator=100;
+        int intMultiplikator = 100;
         String status = "not set";
-          if (kontostand > 250000*intMultiplikator) {
+        if (kontostand > 250000 * intMultiplikator) {
             status = "gold";
-        } else if (kontostand > 100000*intMultiplikator && kontostand < 250000*intMultiplikator) {
+        } else if (kontostand > 100000 * intMultiplikator && kontostand < 250000 * intMultiplikator) {
             status = "silber";
         } else {
             status = "bronze";
         }
-        
         this.status = status;
     }
 
@@ -176,7 +177,7 @@ public class Kunde {
 
     /**
      * Abgeleitet von Equals
-     *
+     * All could be extended/ Adapted with a algorithm with calculate the distance (difference) of two string
      * @author LL
      * @param obj
      * @return ID von existirenden Kunde
@@ -192,26 +193,47 @@ public class Kunde {
             return -1;
         }
         final Kunde other = (Kunde) obj;
-        if (!Objects.equals(this.vorname, other.vorname)) {
+        // Cheek if in one case first and family name are exchanged 
+        if (!Objects.equals(this.vorname.substring(0, 1).toLowerCase(), other.vorname.substring(0, 1).toLowerCase())) {
+            if (!(this.nachname.contains(other.vorname) || other.nachname.contains(this.vorname))) {
+                return -1;
+            }
+        }
+        if (!(this.nachname.contains(other.nachname) || other.nachname.contains(this.nachname))) {
+            if (!(this.vorname.contains(other.nachname) || other.vorname.contains(this.nachname))) {
+                return -1;
+            }
+        }
+
+        // Split the address in street and town.
+        String[] partsThisAdress = this.adresse.split(",");
+        String[] partsOtherAdress = other.adresse.split(",");
+        // Cheek if in the one street there is an information missing
+        if (!(partsOtherAdress[0].contains(partsThisAdress[0]) || partsThisAdress[0].contains(partsOtherAdress[0]))) {
             return -1;
         }
-        if (!Objects.equals(this.nachname, other.nachname)) {
-            return -1;
-        }
-        if (!Objects.equals(this.adresse, other.adresse)) {
-            return -1;
+
+        ////Compare only the PLZ (number)
+        if (partsOtherAdress[1].length() > 4) {
+            if (!Objects.equals(partsThisAdress[1].substring(0, 5), partsOtherAdress[1].substring(0, 5))) {
+                return -1;
+            }
         }
         return kid;
     }
 
-    
+    /**
+     * 
+     * @param fullName
+     * @return In the first element the first name is saved, in the second element the Last name with their titles.
+     */
     public String[] splitter(String fullName) {
         String[] parts = fullName.split(" ");
         ArrayList<String> partsList = new ArrayList<String>(Arrays.asList(parts));
         String[] nameSplited = new String[2];
         nameSplited[0] = "";
         nameSplited[1] = "";
-
+      
         //Move the title of a person to the family Name and short the Array list.
         for (int position = 0; position < partsList.size(); position++) {
             if (partsList.get(position).contains("Dr.") | partsList.get(position).contains("Prof")) {
@@ -220,11 +242,11 @@ public class Kunde {
 
             }
         }
-        nameSplited[0] = partsList.get(0)+" ";
+        nameSplited[0] = partsList.get(0) + " ";
         if (partsList.size() == 2) {
             nameSplited[1] += partsList.get(1);
         } else if (partsList.get(1).contains(("von")) || partsList.get(1).contains(("van"))) {
-            nameSplited[1] += partsList.get(1);
+            nameSplited[1] += partsList.get(1) + " ";
             nameSplited[1] += partsList.get(2);
         } else if (partsList.get(1).matches(".\\.")) { //z.B. F. --> first name
             nameSplited[0] += partsList.get(1);
@@ -232,13 +254,16 @@ public class Kunde {
         } else {
             nameSplited[0] += partsList.get(1);
             for (int x = 2; x < partsList.size(); x++) {
-                nameSplited[1] += partsList.get(x) +" ";
+                nameSplited[1] += partsList.get(x) + " ";
             }
             System.out.println("Following name couldn’t be split correctly: " + nameSplited[0] + "; " + nameSplited[1]);
+            WriteIntoCSV writeIntoCSV = new WriteIntoCSV();
+            writeIntoCSV.generateCsvFileForNamspiltErrors("./namenUeberpruefen.csv", nameSplited[0] + "; " + nameSplited[1]);
         }
-        
+
         vorname = nameSplited[0];
         nachname = nameSplited[1];
         return nameSplited;
+
     }
 }

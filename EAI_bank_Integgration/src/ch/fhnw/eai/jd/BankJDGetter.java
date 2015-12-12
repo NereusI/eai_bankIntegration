@@ -6,12 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.ws.Holder;
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author Loïc
@@ -36,29 +30,36 @@ public class BankJDGetter {
      * @param ka enum KontoKorent, SparKonto
      */
     public void getKontoKorent(kontoArt ka) {
+        try {
 
-        List<String> nachname = listeSparkontoNachname();
-        if (ka == kontoArt.KontoKorent) {
-            nachname = listeKontokorrentNachname();
-        }
-
-        for (String name : nachname) {
-            Kunde kunde = new Kunde();
-            Konto konto = new Konto();
+            List<String> nachname = listeSparkontoNachname();
             if (ka == kontoArt.KontoKorent) {
-                holeKontoKorrent("", name, kunde, konto);
-                kundeKK.add(kunde);
-                kontoKK.add(konto);
-            } else {
-                holeSparkonto("", name, kunde, konto);
-                kundeSpar.add(kunde);
-                kontoSpar.add(konto);
+                nachname = listeKontokorrentNachname();
             }
+
+            for (String name : nachname) {
+                Kunde kunde = new Kunde();
+                Konto konto = new Konto();
+                if (ka == kontoArt.KontoKorent) {
+                    holeKontoKorrent("", name, kunde, konto);
+                    kundeKK.add(kunde);
+                    kontoKK.add(konto);
+                } else {
+                    holeSparkonto("", name, kunde, konto);
+                    kundeSpar.add(kunde);
+                    kontoSpar.add(konto);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("!!!Pleas Start first the VCT Server!!!\n"
+                    + "!!!Bitte Starten Sie zuerst den VCT Server!!!");
+            return;
+           
         }
-        printKontokorrent();
+        //printKontokorrent();
     }
 
-    private static void printKontokorrent() {
+    private static void printKontokorrent() throws Exception {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.printKontokorrent();
@@ -73,7 +74,7 @@ public class BankJDGetter {
      * port = service.getBankJDPort(); printKontokorrent(); printSparkonto();
      * return port.listeKontokorrentNachname(); } //
      */
-    private static void holeKontoKorrent(java.lang.String queryVorname, java.lang.String queryNachname, Kunde kunde, Konto konto) {//, javax.xml.ws.Holder<java.lang.String> vorname, javax.xml.ws.Holder<java.lang.String> nachname, javax.xml.ws.Holder<java.lang.String> adresse, javax.xml.ws.Holder<java.lang.String> land, javax.xml.ws.Holder<java.lang.Integer> ranking, javax.xml.ws.Holder<java.lang.String> ibanKontonummer, javax.xml.ws.Holder<java.lang.Float> kontostand, javax.xml.ws.Holder<java.lang.String> bic) {
+    private static void holeKontoKorrent(java.lang.String queryVorname, java.lang.String queryNachname, Kunde kunde, Konto konto) throws Exception {//, javax.xml.ws.Holder<java.lang.String> vorname, javax.xml.ws.Holder<java.lang.String> nachname, javax.xml.ws.Holder<java.lang.String> adresse, javax.xml.ws.Holder<java.lang.String> land, javax.xml.ws.Holder<java.lang.Integer> ranking, javax.xml.ws.Holder<java.lang.String> ibanKontonummer, javax.xml.ws.Holder<java.lang.Float> kontostand, javax.xml.ws.Holder<java.lang.String> bic) {
         javax.xml.ws.Holder<java.lang.String> vorname = new Holder<>("*");
         javax.xml.ws.Holder<java.lang.String> nachname = new Holder<>("");
         javax.xml.ws.Holder<java.lang.String> adresse = new Holder<>("");
@@ -101,20 +102,20 @@ public class BankJDGetter {
 
     }
 
-    private static java.util.List<java.lang.String> listeSparkontoNachname() {
+    private static java.util.List<java.lang.String> listeSparkontoNachname() throws Exception {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         return port.listeSparkontoNachname();
     }
 
     /**
-     * 
+     *
      * @param queryVorname
      * @param queryNachname
      * @param kunde
-     * @param konto 
+     * @param konto
      */
-    private void holeSparkonto(String queryVorname, String queryNachname, Kunde kunde, Konto konto) {
+    private void holeSparkonto(String queryVorname, String queryNachname, Kunde kunde, Konto konto) throws Exception {
         javax.xml.ws.Holder<java.lang.String> vorname = new Holder<>("");
         javax.xml.ws.Holder<java.lang.String> nachname = new Holder<>("");
         javax.xml.ws.Holder<java.lang.String> strasse = new Holder<>("");
@@ -127,7 +128,6 @@ public class BankJDGetter {
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.holeSparkonto(queryVorname, queryNachname, vorname, nachname, strasse, plzOrt, zinsen, kontonummer, kontostand);
 
- 
         kunde.setKid(-1);
         kunde.setVorname(vorname.value);
         kunde.setNachname(nachname.value);
@@ -136,19 +136,19 @@ public class BankJDGetter {
         kunde.setStatus("");
 
         konto.setKid(-1);
-        konto.setIban(206+"", kontonummer.value + ""); 
+        konto.setIban(206 + "", kontonummer.value + "");
         konto.setKontostand((int) (kontostand.value * (1 + zinsen.value) * 100 * wechselKurs)); //Zins Anrechnen; Long to int
         konto.setKontoart(2);
 
     }
 
-//    private static void printSparkonto() {
-//        ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
-//        ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
-//        port.printSparkonto();
-//    }
+    private static void printSparkonto() throws Exception {
+        ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
+        ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
+        port.printSparkonto();
+    }
 
-    private static java.util.List<java.lang.String> listeKontokorrentNachname() {
+    private static java.util.List<java.lang.String> listeKontokorrentNachname() throws Exception {
         ch.fhnw.wi.eai.bankjd.BankJDService service = new ch.fhnw.wi.eai.bankjd.BankJDService();
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         return port.listeKontokorrentNachname();

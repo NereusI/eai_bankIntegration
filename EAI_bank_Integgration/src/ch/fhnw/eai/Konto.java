@@ -4,8 +4,8 @@ package ch.fhnw.eai;
  *
  * @author Tobias
  */
-public class Konto 
-{   
+public class Konto {
+
     private int kid;
     private String iban;
     private int kontostand;
@@ -18,9 +18,8 @@ public class Konto
     }
 
     public Konto() {
-       
+
     }
-    
 
     /**
      * @return the kid
@@ -63,13 +62,14 @@ public class Konto
     public void setIban(String iban) {
         this.iban = iban;
     }
-      /**
+
+    /**
      * @param iban the iban to set
      */
     public void setIban(String clearing, String kontonr) {
         ch.sic.ibantool.Main ibanclass = new ch.sic.ibantool.Main();
         ch.sic.ibantool.RecordIban recordiban;
-        recordiban = new ch.sic.ibantool. RecordIban ();
+        recordiban = new ch.sic.ibantool.RecordIban();
         recordiban.BCPC = new StringBuffer(clearing);
         recordiban.KoZe = new StringBuffer(kontonr);
         recordiban = ibanclass.IBANConvert(recordiban);
@@ -84,7 +84,8 @@ public class Konto
     }
 
     /**
-     * @param kontoart the kontoart to set; 1: Kontokorrent, 2:Sparkonto, 3:Depotkonto
+     * @param kontoart the kontoart to set; 1: Kontokorrent, 2:Sparkonto,
+     * 3:Depotkonto
      */
     public void setKontoart(int kontoart) {
         this.kontoart = kontoart;
@@ -94,5 +95,5 @@ public class Konto
     public String toString() {
         return "Konto{" + "kid=" + kid + ", iban=" + iban + ", kontostand=" + kontostand + ", kontoart=" + kontoart + '}';
     }
-    
+
 }
