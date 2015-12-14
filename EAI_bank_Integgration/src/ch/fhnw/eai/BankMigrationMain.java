@@ -21,7 +21,7 @@ public class BankMigrationMain {
         
         //Prepare the information in the different instance.
         BankJDGetter bJD = new BankJDGetter();
-        bJD.getKontoKorent(BankJDGetter.kontoArt.KontoKorent);
+        bJD.getKontoKorent(BankJDGetter.kontoArt.KontoKorrent);
         bJD.getKontoKorent(BankJDGetter.kontoArt.SparKonto);
         ReadCSV bankVCT = new ReadCSV();
         BankMigrationMain main = new BankMigrationMain();
@@ -78,8 +78,8 @@ public class BankMigrationMain {
             boolean newKunde = false;
 
             for (Kunde k : kunden) { //
-                kundeID = k.kundeExistiert(kunde);     //Existirt der Kunde Bereits
-                if (kundeID >= 0) {    // Ja, konto an den Kunden Knüpfen
+                kundeID = k.kundeExistiert(kunde);     //Existiert der Kunde bereits?
+                if (kundeID >= 0) {    // Ja, Konto an den Kunden knüpfen
                     konto.setKid(kundeID);
                     break;
                 }

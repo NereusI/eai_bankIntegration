@@ -145,7 +145,7 @@ public class Kunde {
     /**
      * Set Status depending the amount the bank customer owns. The value where delved by the customer
      * As the customer would like to have the account as int (  *100) it has to be taken in count when the evaluation is set.
-     * @param status The total amount of money a customer has. The value real will not be saved at this point.
+     * @param status The total amount of money a customer has. The real value will not be saved at this point.
      */
     public void setStatus(int kontostand) {
         int intMultiplikator = 100;
@@ -180,7 +180,7 @@ public class Kunde {
      * All could be extended/ Adapted with a algorithm with calculate the distance (difference) of two string
      * @author LL
      * @param obj
-     * @return ID von existirenden Kunde
+     * @return ID von existierenden Kunde
      */
     public int kundeExistiert(Object obj) {
         if (this == obj) {
@@ -208,7 +208,7 @@ public class Kunde {
         // Split the address in street and town.
         String[] partsThisAdress = this.adresse.split(",");
         String[] partsOtherAdress = other.adresse.split(",");
-        // Cheek if in the one street there is an information missing
+        // Check for missing information in street
         if (!(partsOtherAdress[0].contains(partsThisAdress[0]) || partsThisAdress[0].contains(partsOtherAdress[0]))) {
             return -1;
         }
@@ -234,7 +234,7 @@ public class Kunde {
         nameSplited[0] = "";
         nameSplited[1] = "";
       
-        //Move the title of a person to the family Name and short the Array list.
+        //Move the title of a person to the family name and short the Array list.
         for (int position = 0; position < partsList.size(); position++) {
             if (partsList.get(position).contains("Dr.") | partsList.get(position).contains("Prof")) {
                 nameSplited[1] += partsList.get(position);

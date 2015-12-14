@@ -13,7 +13,7 @@ import javax.xml.ws.Holder;
 public class BankJDGetter {
 
     public enum kontoArt {
-        KontoKorent, SparKonto
+        KontoKorrent, SparKonto
     }
 
     private ArrayList<Kunde> kundeKK = new ArrayList<>();
@@ -24,23 +24,23 @@ public class BankJDGetter {
 
     /**
      *
-     * Liest die daten aus de WSDL Datei und schreibt diese in die übergebene
-     * arrays (call bay referance)
+     * Liest die Daten aus der WSDL-Datei und schreibt diese in die übergebenen
+     * Arrays (call by reference)
      *
-     * @param ka enum KontoKorent, SparKonto
+     * @param ka enum Kontokorrent, Sparkonto
      */
     public void getKontoKorent(kontoArt ka) {
         try {
 
             List<String> nachname = listeSparkontoNachname();
-            if (ka == kontoArt.KontoKorent) {
+            if (ka == kontoArt.KontoKorrent) {
                 nachname = listeKontokorrentNachname();
             }
 
             for (String name : nachname) {
                 Kunde kunde = new Kunde();
                 Konto konto = new Konto();
-                if (ka == kontoArt.KontoKorent) {
+                if (ka == kontoArt.KontoKorrent) {
                     holeKontoKorrent("", name, kunde, konto);
                     kundeKK.add(kunde);
                     kontoKK.add(konto);
@@ -51,8 +51,8 @@ public class BankJDGetter {
                 }
             }
         } catch (Exception e) {
-            System.out.println("!!!Pleas Start first the VCT Server!!!\n"
-                    + "!!!Bitte Starten Sie zuerst den VCT Server!!!");
+            System.out.println("!!!Please start the VCT Server first!!!\n"
+                    + "!!!Bitte starten Sie zuerst den VCT Server!!!");
             return;
            
         }
@@ -88,7 +88,7 @@ public class BankJDGetter {
         ch.fhnw.wi.eai.bankjd.BankJD port = service.getBankJDPort();
         port.holeKontoKorrent(queryVorname, queryNachname, vorname, nachname, adresse, land, ranking, ibanKontonummer, kontostand, bic);
 
-        // Save the kustumer & Client
+        // Save the customer & client
         kunde.setKid(-1);
         kunde.setVorname(vorname.value);
         kunde.setNachname(nachname.value);
